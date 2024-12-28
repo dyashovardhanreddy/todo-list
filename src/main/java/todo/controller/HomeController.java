@@ -1,21 +1,28 @@
 package todo.controller;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.MediaType;
+
 
 import todo.service.TaskService;
 import todo.configuration.formatter.LocalDateEditor;
@@ -59,24 +66,60 @@ public class HomeController {
 		List<Task> tasks = taskService.getAllTasks();
 		List<Task> overdueTasks = new ArrayList<>();
 		List<Task> upcomingTasks = new ArrayList<>();
+		List<Task> completedTasks = new ArrayList<>();
 		
 		for(Task task :tasks) {
-			if(task.getTaskDeadLine().isBefore(LocalDate.now())) {
-				overdueTasks.add(task);
+			if(!task.isCompleted()) {
+				if(task.getTaskDeadLine().isBefore(LocalDate.now())) {
+					overdueTasks.add(task);
+				} else {
+					upcomingTasks.add(task);
+				}
 			} else {
-				upcomingTasks.add(task);
+				completedTasks.add(task);
 			}
 		}
 		
 		model.addAttribute("overdueTasks", overdueTasks);
 		model.addAttribute("upcomingTasks", upcomingTasks);
+		model.addAttribute("completedTasks", completedTasks);
 		return "view-tasks";
 	}
 	
 	@GetMapping(path="/tasks/{taskId}")
 	public String viewTaskDetails(@PathVariable("taskId") int taskId, Model model ) {
-		model.addAttribute("task", taskService.getTaskDetails(taskId));
+		model.addAttribute("task", taskService.findTaskByID(taskId));
 		return "view-task";
 	}
 	
+	@PostMapping(path="/updatetask",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateString(@RequestBody Task updatedTask){
+		
+		Task existingTask = taskService.findTaskByID(updatedTask.getTaskID());
+		
+		if(existingTask != null) {
+			existingTask.setCompleted(updatedTask.isCompleted());
+			existingTask.setTaskDescription(updatedTask.getTaskDescription());
+			existingTask.setTaskDeadLine(updatedTask.getTaskDeadLine());
+			existingTask.setTaskName(updatedTask.getTaskName());
+			existingTask.setPriorityTask(updatedTask.isPriorityTask());
+			
+			taskService.saveTask(existingTask);
+			
+			return ResponseEntity.ok("Task updated successfully!");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found.");
+		}
+	}
+	
+	@DeleteMapping(path="/deletetask/{taskID}")
+	public ResponseEntity<String> deleteTask(@PathVariable("taskID") int taskId){
+		
+		if(taskService.deleteTask(taskId)) {
+			return ResponseEntity.ok("Task deleted successfully");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Task not deleted");
+		}
+		
+	}
 }

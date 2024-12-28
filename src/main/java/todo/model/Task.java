@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="tasks")
@@ -32,6 +31,9 @@ public class Task {
 	@Column(name="task_deadline")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate taskDeadLine;
+	
+	@Column(name="is_completed")
+	private boolean isCompleted = false;
 
 	public Task() {
 		super();
@@ -84,6 +86,14 @@ public class Task {
 
 	public void setTaskDeadLine(LocalDate taskDeadLine) {
 		this.taskDeadLine = taskDeadLine;
+	}
+
+	public boolean isCompleted() {
+		return isCompleted;
+	}
+
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
 	}
 
 	@Override

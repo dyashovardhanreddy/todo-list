@@ -26,7 +26,13 @@ public class TaskService {
 	}
 	
 	@Transactional
-	public Task getTaskDetails(int taskID) {
-		return taskDAO.getTaskDetails(taskID);
+	public Task findTaskByID(int taskID) {
+		return taskDAO.findTaskByID(taskID);
 	}
+	
+	@Transactional
+	public boolean deleteTask(int taskID) {
+		return taskDAO.deleteTask(taskID);
+	}
+	
 }
