@@ -49,11 +49,12 @@ public class HomeController {
 			@RequestParam("taskName") String taskName,
 			@RequestParam("taskDeadLine") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate taskDeadLine,
 			@RequestParam("taskDescription") String taskDescription,
-			@RequestParam("priorityTask") boolean priorityTask) {
+			@RequestParam("priorityTask") boolean priorityTask, Model model) {
 		
 		Task task = new Task(taskName, taskDescription, priorityTask, taskDeadLine);
 		taskService.saveTask(task);
-		return "feedback";
+		model.addAttribute("message", "Task addedd successfully");
+		return "add-task";
 	}
 	
 	@RequestMapping(path="/addtask", method = RequestMethod.GET)

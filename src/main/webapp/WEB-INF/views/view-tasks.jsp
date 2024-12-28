@@ -23,14 +23,11 @@
 
 	 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	   <ul class="navbar-nav mr-auto">
-	     <li class="nav-item active">
-	       <a class="nav-link" href="/todo-list/">Home <span class="sr-only">(current)</span></a>
-	     </li>
 	     <li class="nav-item">
 	       <a class="nav-link" href="/todo-list/addtask">Add Task</a>
 	     </li>
 	    <li class="nav-item">
-	       <a class="nav-link" href="/todo-list/tasks">View Tasks</a>
+	       <a class="nav-link" href="/todo-list/tasks">View Tasks<span class="sr-only">(current)</span></a>
 	     </li>
 	   </ul>
 	 </div>
