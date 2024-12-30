@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,20 +34,22 @@ public class Task {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate taskDeadLine;
 	
+	@JsonProperty("isCompleted")
 	@Column(name="is_completed")
-	private boolean isCompleted = false;
+	private boolean isCompleted;
 
 	public Task() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Task(String taskName, String taskDescription, boolean priorityTask, LocalDate taskDeadLine) {
+	public Task(String taskName, String taskDescription, boolean priorityTask, LocalDate taskDeadLine, boolean isCompleted) {
 		super();
 		this.taskName = taskName;
 		this.taskDescription = taskDescription;
 		this.priorityTask = priorityTask;
 		this.taskDeadLine = taskDeadLine;
+		this.isCompleted = isCompleted;
 	}
 
 	public int getTaskID() {
@@ -99,6 +103,6 @@ public class Task {
 	@Override
 	public String toString() {
 		return "Task [taskID=" + taskID + ", taskName=" + taskName + ", description=" + taskDescription + ", isImportant="
-				+ priorityTask + ", deadLine=" + taskDeadLine + "]";
+				+ priorityTask + ", deadLine=" + taskDeadLine + ", isCompleted=" + isCompleted + "]";
 	}
 }

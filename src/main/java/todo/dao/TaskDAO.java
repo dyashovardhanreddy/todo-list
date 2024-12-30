@@ -19,6 +19,10 @@ public class TaskDAO {
 		sessionFactory.getCurrentSession().save(task);
 	}
 	
+	public void updateTask(Task task) {
+		sessionFactory.getCurrentSession().update(task);
+	}
+	
 	public List<Task> getAllTasks(){
 		return sessionFactory.getCurrentSession().createQuery("from Task", Task.class).list();
 	}

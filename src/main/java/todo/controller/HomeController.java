@@ -51,7 +51,7 @@ public class HomeController {
 			@RequestParam("taskDescription") String taskDescription,
 			@RequestParam("priorityTask") boolean priorityTask, Model model) {
 		
-		Task task = new Task(taskName, taskDescription, priorityTask, taskDeadLine);
+		Task task = new Task(taskName, taskDescription, priorityTask, taskDeadLine, false);
 		taskService.saveTask(task);
 		model.addAttribute("message", "Task addedd successfully");
 		return "add-task";
@@ -96,16 +96,19 @@ public class HomeController {
 	@PostMapping(path="/updatetask",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateString(@RequestBody Task updatedTask){
 		
+		System.out.println("existing task: " + updatedTask);
 		Task existingTask = taskService.findTaskByID(updatedTask.getTaskID());
 		
 		if(existingTask != null) {
+			
+			
 			existingTask.setCompleted(updatedTask.isCompleted());
 			existingTask.setTaskDescription(updatedTask.getTaskDescription());
 			existingTask.setTaskDeadLine(updatedTask.getTaskDeadLine());
 			existingTask.setTaskName(updatedTask.getTaskName());
 			existingTask.setPriorityTask(updatedTask.isPriorityTask());
 			
-			taskService.saveTask(existingTask);
+			taskService.updateTask(existingTask);
 			
 			return ResponseEntity.ok("Task updated successfully!");
 		} else {

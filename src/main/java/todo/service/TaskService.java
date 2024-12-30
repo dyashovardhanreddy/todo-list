@@ -35,4 +35,9 @@ public class TaskService {
 		return taskDAO.deleteTask(taskID);
 	}
 	
+	@Transactional
+	public void updateTask(Task task) {
+		taskDAO.updateTask(task);
+	}
+	
 }

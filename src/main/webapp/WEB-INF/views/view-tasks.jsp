@@ -53,14 +53,7 @@
             <tbody>
                 <c:forEach var="task" items="${upcomingTasks}">
                     <tr>
-                    	<td><input type="checkbox"
-                    		onchange="isCompleted(this)"
-                    		data-task-id="${task.getTaskID()}"
-                    		data-task-name="${task.getTaskName()}" 
-                    		data-task-description="${task.getTaskDescription()}"
-                    		data-priority-task="${task.isPriorityTask()}" 
-                    		data-task-deadline="${task.getTaskDeadLine()}"
-                    		data-completed="true"></td>
+                    	<td><input type="checkbox" onchange="updateTaskCompletionStatus(${task.getTaskID()},'${task.getTaskName()}','${task.getTaskDescription()}',${task.isPriorityTask()},'${task.getTaskDeadLine()}',true);"></td>
                         <td><a href="/todo-list/tasks/${task.getTaskID()}">${task.getTaskName()}</a></td>
                         <td>${task.isPriorityTask()}</td>
                         <td>${task.getTaskDeadLine()}</td>
@@ -91,7 +84,7 @@
             <tbody>
                 <c:forEach var="task" items="${overdueTasks}">
                     <tr>
-                    	<td><input type="checkbox" onchange="isCompleted(this)"></td>
+                    	<td><input type="checkbox" onchange="updateTaskCompletionStatus(${task.getTaskID()},'${task.getTaskName()}','${task.getTaskDescription()}',${task.isPriorityTask()},'${task.getTaskDeadLine()}',this.checked);"/></td>
                         <td><a href="/todo-list/tasks/${task.getTaskID()}">${task.getTaskName()}</a></td>
                         <td>${task.isPriorityTask()}</td>
                         <td>${task.getTaskDeadLine()}</td>
@@ -120,7 +113,7 @@
 				<tbody>
 					<c:forEach var="task" items="${completedTasks}">
                     <tr>
-                    	<td><input type="checkbox" onchange="isCompleted(this)"></td>
+                    	<td><input type="checkbox" onchange="updateTaskCompletionStatus(${task.getTaskID()},'${task.getTaskName()}','${task.getTaskDescription()}',${task.isPriorityTask()},'${task.getTaskDeadLine()}',false);" checked></td>
                         <td><a href="/todo-list/tasks/${task.getTaskID()}">${task.getTaskName()}</a></td>
                         <td>${task.isPriorityTask()}</td>
                         <td>${task.getTaskDeadLine()}</td>
@@ -156,15 +149,18 @@
 	            alert("An error occurred while deleting the task.");
 	        }
 		}
-		async function isCompleted(checkbox){
+		async function updateTaskCompletionStatus(taskID, taskName, taskDescription, priorityTask, taskDeadLine, isCompleted){
+			
 			const task = {
-					taskID: checkbox.dataset.taskId,
-					taskName: checkbox.dataset.taskName,
-					taskDescription: checkbox.dataset.taskDescription,
-					priorityTask: checkbox.dataset.priorityTask,
-		            taskDeadLine: checkbox.dataset.taskDeadline,
-		            isCompleted: checkbox.dataset.completed,
+					isCompleted: isCompleted,
+					taskID: taskID,
+					taskName: taskName,
+					taskDescription: taskDescription,
+					priorityTask: priorityTask,
+		            taskDeadLine: taskDeadLine
+		            
 			}
+			console.log(task);
 			try{
 				const response = await fetch('/todo-list/updatetask',{
 					method: 'POST',
@@ -175,9 +171,9 @@
 				});
 				
 				if (response.ok) {
-	                alert(`Task "${task.taskName}" status updated successfully!`);
+					location.reload();      
 	            } else {
-	                alert(`Failed to update task "${task.taskName}".`);
+	                alert("Failed to update task " + taskName);
 	            }
 			} catch (error) {
 	            console.error("Error updating task:", error);
