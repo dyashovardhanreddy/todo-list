@@ -38,7 +38,7 @@
       <input type="text" class="form-control" id="taskDescription" name="taskDescription" placeholder="Enter task description">
     </div>
     <div class="form-group">
-      <p>Priority Task:</p>
+      <p>Priority Task</p>
       <label for="yesPriorityTask">
         <input type="radio" id="yesPriorityTask" name="priorityTask" value="yes" required> Yes
       </label>
@@ -47,7 +47,7 @@
       </label>
     </div>
     <div class="form-group">
-      <label for="taskDeadLine">Deadline:</label>
+      <label for="taskDeadLine">Deadline</label>
       <input type="date" class="form-control" id="taskDeadLine" name="taskDeadLine" required>
     </div>
     <button type="submit" class="btn btn-primary">Add Task</button>

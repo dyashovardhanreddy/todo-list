@@ -126,4 +126,11 @@ public class HomeController {
 		}
 		
 	}
+	
+	@GetMapping("/edittask/{taskID}")
+	public String editTaskDetails(@PathVariable("taskId") int taskId, Model model) {
+		model.addAttribute("task", taskService.findTaskByID(taskId));
+		return "edit-task-details";
+	}
+	
 }
