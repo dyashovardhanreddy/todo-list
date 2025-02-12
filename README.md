@@ -1,21 +1,24 @@
-# ToDo Application
-## Overview
-This is a Spring MVC and Hibernate-based application for managing tasks efficiently. The system supports CRUD operations on tasks, allowing users to create, update, delete, and view tasks. It also includes features such as marking tasks as completed, prioritizing tasks, and setting deadlines.
+# 📝 ToDo Application  
 
-## Features
-- **Create Tasks**: Add new tasks with details such as name, description, deadline, priority, and completion status.
-- **Update Tasks**: Modify existing tasks, including changing task details and marking them as completed.
-- **Delete Tasks**: Remove tasks from the system.
-- **View Tasks**: List all tasks with sorting and filtering options.
-- **Responsive Frontend**: Built with HTML, CSS, and JavaScript for a user-friendly interface.
+## Overview  
+The **ToDo Application** is a task management system built using **Spring MVC** and **Hibernate**. It enables users to efficiently organize their tasks with **CRUD operations**, priority settings, deadlines, and completion tracking.  
 
-## Technologies Used
-### Backend
-**Java Spring MVC**: For building the application’s backend.
-**Hibernate**: For database interaction using ORM (Object Relational Mapping).
-**Java 17**
-### Frontend
-**HTML5/CSS3**: For layout and styling.
-**JavaScript**: For client-side interactivity.
-### Database
-**Oracle Database**: For data persistence.
+## Features  
+- ** Create Tasks** – Add new tasks with a title, description, deadline, priority level, and completion status.  
+- ** Update Tasks** – Modify existing tasks, update details, or mark tasks as completed.  
+- ** Delete Tasks** – Remove tasks when they are no longer needed.  
+- ** View Tasks** – List tasks with sorting and filtering options for better organization.  
+- ** Responsive Frontend** – A clean and intuitive UI built with **HTML, CSS, and JavaScript**.  
+
+## Technologies Used  
+### Backend  
+- **Spring MVC** – Handles application logic and request processing.  
+- **Hibernate** – ORM framework for seamless database interactions.  
+- **Java 17** – Modern Java features for better performance and maintainability.  
+
+### Frontend  
+- **HTML5/CSS3** – For structuring and styling the user interface.  
+- **JavaScript** – Provides interactivity and enhances user experience.  
+
+### Database  
+- **Oracle Database** – Ensures secure and efficient data persistence.  
